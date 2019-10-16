@@ -22,11 +22,15 @@ public class NimiGen {
 		List<String> classList = new ArrayList<String>();
 		classList.add("warrior");
 		classList.add("paladin");
+		classList.add("death knight");
 		classList.add("demonhunter");
 		classList.add("monk");
+		classList.add("cultist");
 		classList.add("priest");
+		classList.add("dark priest");
 		classList.add("sorcerer");
 		classList.add("wizard");
+		classList.add("warlock");
 		classList.add("druid");
 		classList.add("shaman");
 		classList.add("thief");
@@ -34,6 +38,7 @@ public class NimiGen {
 		classList.add("hunter");
 		classList.add("bard");
 		classList.add("skald");
+		classList.add("merchant");
 		classList.add("peasant");
 
 		switch (race) {
@@ -46,6 +51,14 @@ public class NimiGen {
 				return race + " " + selClass + " of " + compileName();
 			} else if (selClass.equals("priest") && a) {
 				return race + " " + selClass + " of " + compileName() + " " + selTitle();
+			} else  if (selClass.equals("dark priest") && !a) {
+				return race + " " + selClass + " of " + compileName();
+			} else if (selClass.equals("dark priest") && a) {
+				return race + " " + selClass + " of " + compileName() + " " + selTitle();
+			} else  if (selClass.equals("cultist") && !a) {
+				return race + " " + selClass + " of " + compileName();
+			} else if (selClass.equals("cultist") && a) {
+				return race + " " + selClass + " of " + compileName() + " " + selTitle();
 			} else {
 				return race + " " + selClass;
 			}
@@ -56,7 +69,7 @@ public class NimiGen {
 
 			if (selClass.equals("warrior") || selClass.equals("demonhunter") || selClass.equals("druid")
 					|| selClass.equals("thief") || selClass.equals("ranger") || selClass.equals("hunter")
-					|| selClass.equals("bard")) {
+					|| selClass.equals("bard") || selClass.equals("merchant")) {
 
 				return race + " " + selClass;
 
@@ -70,7 +83,7 @@ public class NimiGen {
 
 			if (selClass.equals("warrior") || selClass.equals("demonhunter") || selClass.equals("sorcerer")
 					|| selClass.equals("wizard") || selClass.equals("priest") || selClass.equals("paladin")
-					|| selClass.equals("bard") || selClass.equals("monk")) {
+					|| selClass.equals("thief") || selClass.equals("monk") || selClass.equals("merchant")) {
 
 				if (selClass.equals("priest") && !a) {
 					return race + " " + selClass + " of " + compileName();
@@ -83,12 +96,62 @@ public class NimiGen {
 			} else {
 				selClass = classList.get((int) (Math.random() * classList.size()));
 			}
+			
+		case "halfling":
 
 		case "wood elf":
 
+			selClass = classList.get((int) (Math.random() * classList.size()));
+
+			if (selClass.equals("warrior") || selClass.equals("demonhunter") || selClass.equals("druid")
+					|| selClass.equals("thief") || selClass.equals("ranger") || selClass.equals("hunter")
+					|| selClass.equals("bard") || selClass.equals("merchant")) {
+
+				return race + " " + selClass;
+
+			} else {
+				selClass = classList.get((int) (Math.random() * classList.size()));
+			}
+
 		case "dark elf":
 
+			selClass = classList.get((int) (Math.random() * classList.size()));
+
+			if (selClass.equals("warrior") || selClass.equals("warlock") || selClass.equals("sorcerer")
+					|| selClass.equals("wizard") || selClass.equals("cultist") || selClass.equals("death knight")
+					|| selClass.equals("bard") || selClass.equals("monk") || selClass.equals("merchant")) {
+
+				if (selClass.equals("cultist") && !a) {
+					return race + " " + selClass + " of " + compileName();
+				} else if (selClass.equals("cultist") && a) {
+					return race + " " + selClass + " of " + compileName() + " " + selTitle();
+				} else {
+					return race + " " + selClass;
+				}
+
+			} else {
+				selClass = classList.get((int) (Math.random() * classList.size()));
+			}
+
 		case "dwarf":
+
+			selClass = classList.get((int) (Math.random() * classList.size()));
+
+			if (selClass.equals("warrior") || selClass.equals("demonhunter") || selClass.equals("priest")
+					|| selClass.equals("paladin") || selClass.equals("thief") || selClass.equals("monk")
+					|| selClass.equals("peasant") || selClass.equals("merchant")) {
+
+				if (selClass.equals("priest") && !a) {
+					return race + " " + selClass + " of " + compileName();
+				} else if (selClass.equals("priest") && a) {
+					return race + " " + selClass + " of " + compileName() + " " + selTitle();
+				} else {
+					return race + " " + selClass;
+				}
+
+			} else {
+				selClass = classList.get((int) (Math.random() * classList.size()));
+			}
 
 		default:
 			return null;
@@ -222,14 +285,7 @@ public class NimiGen {
 
 				name += specVocList[rand.nextInt(specVocList.length)];
 
-			} /*
-				 * else if (a && b && c && d){
-				 * 
-				 * int k = (int) Math.random() * specVocList.length; System.out.println(k); if
-				 * (k == 0) { k = 1; } name += specVocList[k]; System.out.println("12345");
-				 * 
-				 * }
-				 */
+			}
 
 		}
 
