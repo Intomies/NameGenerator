@@ -7,20 +7,26 @@ public class NimiGen {
 	public static void main(String[] args) {
 
 		for (int i = 0; i < 15; i++) {
-			System.out.println(compileName() + " " + compileName() + ", " + selectClassAndRace());
+			System.out.println(compileCharacter());
 		}
 
 	}
 
-	private static String selectClassAndRace() {
+	private static String compileCharacter() {
 //Tähän voisi tehdä jonkun roturajauksen
+		boolean isGod = false;
 		String race = selectRace();
+		String name = generateName(race, isGod);
 		String selClass = "";
+		String classes = "";
+		String[] clArray;
+		String response = "";
 		Random rand = new Random();
 		boolean a = rand.nextBoolean();
 
 		List<String> classList = new ArrayList<String>();
 		classList.add("warrior");
+		classList.add("brawler");
 		classList.add("paladin");
 		classList.add("death knight");
 		classList.add("demonhunter");
@@ -48,56 +54,57 @@ public class NimiGen {
 			selClass = classList.get((int) (Math.random() * classList.size()));
 
 			if (selClass.equals("priest") && !a) {
-				return race + " " + selClass + " of " + compileName();
+				isGod = true;
+				return name + ", " + race + " " + selClass + " of " + generateName(race, isGod);
 			} else if (selClass.equals("priest") && a) {
-				return race + " " + selClass + " of " + compileName() + " " + selTitle();
-			} else  if (selClass.equals("dark priest") && !a) {
-				return race + " " + selClass + " of " + compileName();
+				isGod = true;
+				return name + ", " + race + " " + selClass + " of " + generateName(race, isGod) + " " + selTitle();
+			} else if (selClass.equals("dark priest") && !a) {
+				isGod = true;
+				return name + ", " + race + " " + selClass + " of " + generateName(race, isGod);
 			} else if (selClass.equals("dark priest") && a) {
-				return race + " " + selClass + " of " + compileName() + " " + selTitle();
-			} else  if (selClass.equals("cultist") && !a) {
-				return race + " " + selClass + " of " + compileName();
+				isGod = true;
+				return name + ", " + race + " " + selClass + " of " + generateName(race, isGod) + " " + selTitle();
+			} else if (selClass.equals("cultist") && !a) {
+				isGod = true;
+				return name + ", " + race + " " + selClass + " of " + generateName(race, isGod);
 			} else if (selClass.equals("cultist") && a) {
-				return race + " " + selClass + " of " + compileName() + " " + selTitle();
+				isGod = true;
+				return name + ", " + race + " " + selClass + " of " + generateName(race, isGod) + " " + selTitle();
 			} else {
-				return race + " " + selClass;
+				isGod = true;
+				return name + ", " + race + " " + selClass;
 			}
 
 		case "night elf":
 
-			selClass = classList.get((int) (Math.random() * classList.size()));
+			classes = "warrior,demonhunter,druid,thief,ranger,hunter,bard,merchant";
+			clArray = classes.split(",");
 
-			if (selClass.equals("warrior") || selClass.equals("demonhunter") || selClass.equals("druid")
-					|| selClass.equals("thief") || selClass.equals("ranger") || selClass.equals("hunter")
-					|| selClass.equals("bard") || selClass.equals("merchant")) {
+			selClass = clArray[(int) (Math.random() * clArray.length)];
 
-				return race + " " + selClass;
-
-			} else {
-				selClass = classList.get((int) (Math.random() * classList.size()));
-			}
+			return name + ", " + race + " " + selClass;
 
 		case "high elf":
+			classes = "warrior,paladin,demonhunter,priest,wizard,sorcerer,monk,bard,merchant";
+			clArray = classes.split(",");
 
-			selClass = classList.get((int) (Math.random() * classList.size()));
+			selClass = clArray[(int) (Math.random() * clArray.length)];
 
-			if (selClass.equals("warrior") || selClass.equals("demonhunter") || selClass.equals("sorcerer")
-					|| selClass.equals("wizard") || selClass.equals("priest") || selClass.equals("paladin")
-					|| selClass.equals("thief") || selClass.equals("monk") || selClass.equals("merchant")) {
-
-				if (selClass.equals("priest") && !a) {
-					return race + " " + selClass + " of " + compileName();
-				} else if (selClass.equals("priest") && a) {
-					return race + " " + selClass + " of " + compileName() + " " + selTitle();
-				} else {
-					return race + " " + selClass;
-				}
-
+			if (selClass.equals("priest") && !a) {
+				return name + ", " + race + " " + selClass + " of " + generateName(race, isGod);
+			} else if (selClass.equals("priest") && a) {
+				return name + ", " + race + " " + selClass + " of " + generateName(race, isGod) + " " + selTitle();
 			} else {
-				selClass = classList.get((int) (Math.random() * classList.size()));
+				return name + ", " + race + " " + selClass;
 			}
-			
+
 		case "halfling":
+			classes = "brawler,thief,hunter,bard,merchant,peasant";
+			clArray = classes.split(",");
+			selClass = clArray[(int) (Math.random() * clArray.length)];
+
+			return name + ", " + race + " " + selClass;
 
 		case "wood elf":
 
@@ -122,9 +129,9 @@ public class NimiGen {
 					|| selClass.equals("bard") || selClass.equals("monk") || selClass.equals("merchant")) {
 
 				if (selClass.equals("cultist") && !a) {
-					return race + " " + selClass + " of " + compileName();
+					return race + " " + selClass + " of " + generateName(race, isGod);
 				} else if (selClass.equals("cultist") && a) {
-					return race + " " + selClass + " of " + compileName() + " " + selTitle();
+					return race + " " + selClass + " of " + generateName(race, isGod) + " " + selTitle();
 				} else {
 					return race + " " + selClass;
 				}
@@ -139,12 +146,12 @@ public class NimiGen {
 
 			if (selClass.equals("warrior") || selClass.equals("demonhunter") || selClass.equals("priest")
 					|| selClass.equals("paladin") || selClass.equals("thief") || selClass.equals("monk")
-					|| selClass.equals("peasant") || selClass.equals("merchant")) {
+					|| selClass.equals("peasant") || selClass.equals("merchant") || selClass.equals("brawler")) {
 
 				if (selClass.equals("priest") && !a) {
-					return race + " " + selClass + " of " + compileName();
+					return race + " " + selClass + " of " + generateName(race, isGod);
 				} else if (selClass.equals("priest") && a) {
-					return race + " " + selClass + " of " + compileName() + " " + selTitle();
+					return race + " " + selClass + " of " + generateName(race, isGod) + " " + selTitle();
 				} else {
 					return race + " " + selClass;
 				}
@@ -187,60 +194,102 @@ public class NimiGen {
 	private static String selectRace() {
 
 		List<String> raceList = new ArrayList<String>();
-		raceList.add("human");
-		raceList.add("night elf");
-		raceList.add("high elf");
-		raceList.add("wood elf");
-		raceList.add("dark elf");
-		raceList.add("dwarf");
+//		raceList.add("human");
+//		raceList.add("night elf");
+//		raceList.add("high elf");
 		raceList.add("halfling");
-		raceList.add("halforc");
-		raceList.add("orc");
-		raceList.add("goblin");
-		raceList.add("tiefling");
-		raceList.add("kobold");
-		raceList.add("gnoll");
-		raceList.add("troll");
+//		raceList.add("wood elf");
+//		raceList.add("dark elf");
+//		raceList.add("dwarf");
+//		raceList.add("halforc");
+//		raceList.add("orc");
+//		raceList.add("goblin");
+//		raceList.add("tiefling");
+//		raceList.add("kobold");
+//		raceList.add("gnoll");
+//		raceList.add("troll");
 
 		return raceList.get((int) (Math.random() * raceList.size()));
 	}
 
-	private static String compileName() {
+	private static String generateName(String race, boolean isGod) {
 //Tähän voisi tehdä eri konsonantti/vokaalistringejä eri rotuja varten
 		Random rand = new Random();
+		String cons = "";
+		String[] consAr;
+		String vocs = "";
+		String[] vocsAr;
+		int ran = 0;
+		switch (race) {
 
-		String consonants = "bbcddfghjkklmmnnppqrrssttvwxz";
-		List<String> consonantList = new ArrayList<String>();
-		for (int i = 0; i < consonants.length(); i++) {
-			int j = 1 + i;
+		case "human":
 
-			if (j > consonants.length()) {
-				j = consonants.length();
+			ran = (int) ((Math.random() * 2) + 2);
+			cons = "b,b,c,d,d,f,g,h,j,k,k,l,m,m,n,n,p,p,q,r,r,s,s,t,t,v,w,x,z";
+			consAr = cons.split(",");
+			vocs = "a,e,i,o,u,y";
+			vocsAr = vocs.split(",");
+
+			if (isGod) {
+				return compileName(consAr, vocsAr, ran, rand);
+			} else {
+				return compileName(consAr, vocsAr, ran, rand) + " " + compileName(consAr, vocsAr, ran, rand);
 			}
-			String c = consonants.substring(i, j);
-			consonantList.add(c);
-		}
+		case "night elf":
 
-		String vocals = "aaaeeeiiiooouuuyyy";
-		List<String> vocalList = new ArrayList<String>();
-		for (int i = 0; i < vocals.length(); i++) {
+			ran = (int) ((Math.random() * 2) + 2);
+			cons = "b,c,d,f,g,h,j,l,m,n,p,q,r,s,s,t";
+			consAr = cons.split(",");
+			vocs = "a,e,i,o,u,y,á,ó,é,ú,ý,í";
+			vocsAr = vocs.split(",");
 
-			int j = 1 + i;
+			return compileName(consAr, vocsAr, ran, rand);
 
-			if (j > vocals.length()) {
-				j = vocals.length();
+		case "high elf":
+
+			ran = (int) ((Math.random() * 3) + 3);
+			cons = "b,c,d,f,g,l,m,n,q,r,s,s";
+			consAr = cons.split(",");
+			vocs = "a,a,a,a,a,a,e,e,e,e,e,i,i,i,i,i,o,o,o,o,o,u,u,u,u,u,y,ü,ë";
+			vocsAr = vocs.split(",");
+
+			if (isGod) {
+				return compileName(consAr, vocsAr, ran, rand);
+			} else {
+				return compileName(consAr, vocsAr, ran, rand) + " " + compileName(consAr, vocsAr, ran, rand);
 			}
 
-			String v = vocals.substring(i, j);
-			vocalList.add(v);
+		case "halfling":
+			String lnParts = "ash,worthy,band,wax,brace,girdle,brown,lock,"
+									+ "brush,gather,bull,roar,bunce,burrow,chubb,"
+									+ "cotton,dale,gardner,good,barrel,body,bottle,"
+									+ "green,span,grub,ham,son,heather,toe,high,"
+									+ "hill,topple,horn,blower,wart,leagal,low,"
+									+ "linden,brook,mill,bridge,new,tan,old,"
+									+ "fur,ost,good,over,hill,short,wick,sire,"
+									+ "tal,bot,tea,leaf,thorn,gage,tight,field,"
+									+ "toss,cobble,trill,under,bough,weather,bee";
+			String[] lnpsAr = lnParts.split(",");
+			String firstPart = lnpsAr[rand.nextInt(lnpsAr.length)];
+			ran = (int) ((Math.random() * 1) + 2);
+			cons = "ba,ca,da,fa,ga,ha,ma,na,ra,sa,ta,bo,do,fo,go,mo,no,ro,so,to";
+			consAr = cons.split(",");
+			vocs = "e,i,u";
+			vocsAr = vocs.split(",");
 
+			return compileName(consAr, vocsAr, ran, rand) + " " + firstPart.substring(0,1).toUpperCase() + firstPart.substring(1,firstPart.length()) + lnpsAr[rand.nextInt(lnpsAr.length)] ;
+
+		default:
+			return null;
 		}
+//		String specVoc = "á,ó,é,ú,ö,ý,í,ü,û,â,ê,î";
+//		String[] specVocList = specVoc.split(",");
 
-		String specVoc = "á,ó,é,ú,ö,ý,í,ü,û,â,ê,î";
-		String[] specVocList = specVoc.split(",");
+	}
+
+	private static String compileName(String[] consAr, String[] vocsAr, int ran, Random rand) {
 
 		String name = "";
-		int ran = (int) ((Math.random() * 3) + 2);
 
 		for (int i = 1; i <= ran; i++) {
 
@@ -250,46 +299,45 @@ public class NimiGen {
 			boolean d = rand.nextBoolean();
 
 			if (a && b && c) {
-				name += consonantList.get(rand.nextInt(consonantList.size()));
-				name += vocalList.get(rand.nextInt(vocalList.size()));
-				name += vocalList.get(rand.nextInt(vocalList.size()));
+				name += consAr[rand.nextInt(consAr.length)];
+				name += vocsAr[rand.nextInt(vocsAr.length)];
+				name += vocsAr[rand.nextInt(vocsAr.length)];
 
 			} else if (a && !b && !c) {
-				name += consonantList.get(rand.nextInt(consonantList.size()));
-				name += vocalList.get(rand.nextInt(vocalList.size()));
-				name += consonantList.get(rand.nextInt(consonantList.size()));
+				name += consAr[rand.nextInt(consAr.length)];
+				name += vocsAr[rand.nextInt(vocsAr.length)];
+				name += consAr[rand.nextInt(consAr.length)];
 
 			} else if (!a && b && !c) {
-				name += vocalList.get(rand.nextInt(vocalList.size()));
-				name += vocalList.get(rand.nextInt(vocalList.size()));
-				name += consonantList.get(rand.nextInt(consonantList.size()));
+				// name += vocsAr[rand.nextInt(vocsAr.length)];
+				name += vocsAr[rand.nextInt(vocsAr.length)];
+				name += consAr[rand.nextInt(consAr.length)];
 
 			} else if (!a && !b && c) {
-				name += vocalList.get(rand.nextInt(vocalList.size()));
-				name += consonantList.get(rand.nextInt(consonantList.size()));
-				name += vocalList.get(rand.nextInt(vocalList.size()));
+				name += vocsAr[rand.nextInt(vocsAr.length)];
+				name += consAr[rand.nextInt(consAr.length)];
+				name += vocsAr[rand.nextInt(vocsAr.length)];
 
 			} else if (!a && !b && !c) {
-				name += consonantList.get(rand.nextInt(consonantList.size()));
-				name += vocalList.get(rand.nextInt(vocalList.size()));
+				name += consAr[rand.nextInt(consAr.length)];
+				name += vocsAr[rand.nextInt(vocsAr.length)];
 
 			} else if (a && b && !c) {
-				name += vocalList.get(rand.nextInt(vocalList.size()));
-				name += consonantList.get(rand.nextInt(consonantList.size()));
+				name += vocsAr[rand.nextInt(vocsAr.length)];
+				name += consAr[rand.nextInt(consAr.length)];
 
 			} else if (!a && b && c) {
-				name += vocalList.get(rand.nextInt(vocalList.size()));
+				name += vocsAr[rand.nextInt(vocsAr.length)];
 
 			} else if (a && !b && c) {
-				name += consonantList.get(rand.nextInt(consonantList.size()));
-
-				name += specVocList[rand.nextInt(specVocList.length)];
+				name += consAr[rand.nextInt(consAr.length)];
 
 			}
 
 		}
 
 		return name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
+
 	}
 
 }
